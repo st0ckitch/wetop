@@ -1,0 +1,348 @@
+/* ============================================================
+   offer.css — additive, lives ON TOP of style.css
+   No new color tokens. All colors via portfolio's CSS vars.
+   ============================================================ */
+
+/* nav: back-to-portfolio link */
+.nav-back {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--accent) !important;
+  opacity: 1 !important;
+  padding-left: 14px !important;
+  border-left: 1px solid var(--line);
+}
+
+/* mobile nav already handled by style.css; nothing extra here */
+
+/* ============================================================
+   HERO additions — three.js layer behind grid + glow
+   .hero-particles is already defined in style.css (additive)
+   ============================================================ */
+.hero-particles {
+  z-index: 1;        /* above hero-grid (-1) but BELOW the .wrap text */
+  opacity: 0.85;
+}
+.hero .hero-bg { isolation: isolate; }
+.hero .wrap { position: relative; z-index: 2; }
+
+/* ============================================================
+   WHO — brand grid (matches the .skill / .glass aesthetic)
+   ============================================================ */
+.brand-strip {
+  margin-top: 100px;
+  padding-top: 40px;
+  border-top: 1px solid var(--line);
+}
+.brand-strip-head {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 32px;
+}
+.brand-strip-head::after {
+  content: ''; flex: 1; height: 1px; background: var(--line);
+}
+.brand-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+}
+.brand-tile {
+  aspect-ratio: 16 / 9;
+  display: flex; align-items: center; justify-content: center;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: border-color .3s var(--ease), background .3s var(--ease), transform .3s var(--ease);
+}
+.brand-tile:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  transform: translateY(-2px);
+}
+.brand-tile img {
+  max-height: 56px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.55;
+  filter: grayscale(100%);
+  transition: opacity .35s var(--ease), filter .35s var(--ease);
+}
+[data-theme="light"] .brand-tile img {
+  filter: grayscale(100%) brightness(0.4);
+  opacity: 0.6;
+}
+.brand-tile:hover img {
+  opacity: 1;
+  filter: none;
+}
+.brand-tile-text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+@media (max-width: 900px) { .brand-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 600px) { .brand-grid { grid-template-columns: repeat(3, 1fr); } }
+
+/* ============================================================
+   TEAM — 3-col card grid using portfolio card aesthetic
+   ============================================================ */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.team-card {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: linear-gradient(180deg, var(--bg-2), var(--bg-3));
+  overflow: hidden;
+  transition: transform .35s var(--ease-out), border-color .35s var(--ease), box-shadow .45s var(--ease);
+}
+.team-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(80% 60% at 100% 0%, var(--accent-soft) 0%, transparent 60%);
+  pointer-events: none;
+  opacity: 0.6;
+}
+.team-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 24px 60px -22px var(--accent-glow);
+}
+.team-photo {
+  position: relative;
+  height: 280px;
+  display: flex; align-items: flex-end; justify-content: center;
+  background:
+    radial-gradient(ellipse at 50% 90%, var(--accent-soft), transparent 60%),
+    linear-gradient(180deg, var(--bg-3), var(--bg-2));
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+.team-photo img {
+  max-height: 100%;
+  width: auto;
+  object-fit: contain;
+  transition: transform .5s var(--ease);
+  filter: drop-shadow(0 12px 28px rgba(0,0,0,0.35));
+}
+[data-theme="light"] .team-photo img {
+  filter: drop-shadow(0 12px 28px rgba(6,7,10,0.18));
+}
+.team-card:hover .team-photo img { transform: scale(1.04); }
+.team-body {
+  padding: 24px 26px 28px;
+  position: relative;
+}
+.team-body .t-title {
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+.team-body .t-desc {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-dim);
+  margin-bottom: 16px;
+}
+@media (max-width: 1100px) { .team-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 720px)  { .team-grid { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   FUNNEL — chart wrap centred inside the .case card
+   ============================================================ */
+.funnel-chart-wrap {
+  position: relative;
+  margin: 30px auto 0;
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 1 / 1;
+}
+#budgetChart { width: 100% !important; height: 100% !important; }
+.funnel-chart-center {
+  position: absolute;
+  inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  pointer-events: none;
+  text-align: center;
+}
+.funnel-chart-center .mval {
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.funnel-chart-center .mlab {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: 6px;
+}
+
+.funnel-rows { display: flex; flex-direction: column; gap: 24px; margin-top: 30px; }
+.funnel-row { padding: 24px 0; border-top: 1px solid var(--line); }
+.funnel-row:first-child { border-top: 0; padding-top: 0; }
+.funnel-row-head {
+  display: flex; align-items: baseline; gap: 16px;
+  margin-bottom: 10px;
+}
+.funnel-pct {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 36px;
+  letter-spacing: -0.03em;
+  color: var(--accent);
+  line-height: 1;
+}
+.funnel-pct-dim {
+  color: var(--accent);
+  opacity: 0.45;
+}
+.funnel-amount {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--ink-dim);
+}
+.funnel-row-title {
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.funnel-row-desc, .funnel-row-kpi {
+  font-size: 14px;
+  color: var(--ink-dim);
+  line-height: 1.55;
+  margin-top: 4px;
+}
+.funnel-row-kpi .mono {
+  color: var(--ink-faint);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-right: 8px;
+}
+
+/* ============================================================
+   ICP — kv-list inside .feature-card
+   ============================================================ */
+.kv-list {
+  margin-top: 28px;
+  display: grid; gap: 0;
+}
+.kv-list .kv:last-child { border-bottom: 0; }
+
+/* ============================================================
+   FEE — 2-col grid inside the chrome case
+   ============================================================ */
+.fee-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 60px;
+  align-items: center;
+  margin-top: 30px;
+}
+.fee-list {
+  list-style: none;
+  margin-top: 24px;
+  padding: 0;
+}
+.fee-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
+}
+.fee-list li:first-child { border-top: 0; }
+.fee-check {
+  width: 18px; height: 18px;
+  margin-top: 4px;
+  flex-shrink: 0;
+  filter: hue-rotate(0deg);
+}
+[data-theme="light"] .fee-check { filter: brightness(0.5); }
+.fee-list-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.fee-list-desc {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--ink-dim);
+  line-height: 1.5;
+}
+.fee-metric {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid var(--line);
+  padding-left: 60px;
+}
+.fee-metric .mval {
+  font-family: var(--font-display);
+  font-size: clamp(80px, 10vw, 140px);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  color: var(--accent);
+  line-height: 0.9;
+}
+.fee-metric .mlab {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+  margin-top: 12px;
+}
+@media (max-width: 900px) {
+  .fee-grid { grid-template-columns: 1fr; gap: 40px; }
+  .fee-metric { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); padding-top: 30px; }
+}
+
+/* ============================================================
+   UPSELL — small case-headline variant
+   ============================================================ */
+.case.sz-4 { grid-column: span 4; min-height: 320px; }
+@media (max-width: 900px) {
+  .case.sz-4 { grid-column: span 12; }
+}
+.case-headline-sm {
+  font-size: clamp(24px, 2.4vw, 36px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-top: 24px;
+  max-width: 16ch;
+  text-wrap: balance;
+}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print {
+  body { cursor: auto !important; background: #fff !important; color: #111 !important; }
+  body::before, body::after { display: none !important; }
+  .nav, .cursor-dot, .cursor-ring, #hero-canvas, .hero-glow, .hero-grid { display: none !important; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .section { padding: 32px 40px !important; page-break-inside: avoid; break-inside: avoid; }
+  .case, .feature-card, .team-card { box-shadow: none !important; break-inside: avoid; }
+}
