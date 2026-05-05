@@ -172,7 +172,7 @@
       new Chart(ctx, {
         type: 'doughnut',
         data: {
-          labels: ['Messages', 'Awareness & Engagement'],
+          labels: ['Messages & Engagement', 'Awareness'],
           datasets: [{
             data: [75, 25],
             backgroundColor: [accent, accentSoft],
